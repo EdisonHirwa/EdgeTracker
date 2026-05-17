@@ -1,0 +1,25 @@
+{
+  "name": "edgetracker-backend",
+  "version": "1.0.0",
+  "description": "EdgeTracker Trading Journal Backend",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --exec tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.12.3",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
