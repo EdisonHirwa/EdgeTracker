@@ -1,0 +1,98 @@
+name: Main CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      # Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      # Install dependencies
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      # Run ESLint
+      - name: Run Frontend Linter
+        run: npm run lint
+
+      # Run Tests
+      - name: Run Frontend Tests
+        run: npm test
+
+      # Build React App
+      - name: Build Frontend
+        run: npm run build
+
+      # Success Message
+      - name: Frontend Success
+        run: echo "Frontend pipeline completed successfully 🚀"
+
+  backend:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      # Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      # Install dependencies
+      - name: Install Backend Dependencies
+        run: npm install
+
+      # Run ESLint
+      - name: Run Backend Linter
+        run: npm run lint
+
+      # Run Backend Tests
+      - name: Run Backend Tests
+        run: npm test
+
+      # Success Message
+      - name: Backend Success
+        run: echo "Backend pipeline completed successfully 🚀"
